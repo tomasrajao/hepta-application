@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Task(models.Model):
@@ -16,4 +17,5 @@ class Task(models.Model):
         if len(self.description) > 30:
             return f'{self.description[:30]}...'
         return self.description
+
     truncated_description.short_description = 'Descrição'

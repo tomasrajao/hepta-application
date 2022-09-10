@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from todo_app.tasks.models import Task
 
+
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = (
@@ -12,4 +13,3 @@ class TaskAdmin(admin.ModelAdmin):
         'modified_at',
         'registered_at',
     )
-
