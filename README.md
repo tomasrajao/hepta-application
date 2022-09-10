@@ -14,4 +14,5 @@ docker-compose up -d
 
 python manage.py migrate
 python manage.py createsuperuser --email="admin@admin.com"
+python manage.py runserver
 ```
