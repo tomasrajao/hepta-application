@@ -14,7 +14,7 @@ class Task(models.Model):
         return self.title
 
     def truncated_description(self):
-        if len(self.description) > 30:
+        if len(self.description) > 33:
             return f'{self.description[:30]}...'
         return self.description
 
