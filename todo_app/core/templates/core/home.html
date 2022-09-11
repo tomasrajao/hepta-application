@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block body %}
+
+{% block title %}
+<h2>Home</h2>
+{% endblock %}
+</br>
+</br>
+<a href="{% url 'tasks:list-tasks' %}">Tasks list</a>
+</br>
+</br>
+<a>Add task</a>
+</br>
+</br>
+<a>Edit task</a>
+</br>
+</br>
+<a>Delete task</a>
+</br>
+{% endblock %}
