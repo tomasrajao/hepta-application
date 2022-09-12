@@ -2,10 +2,22 @@
 {% block page_title %}Cadastro de tarefas{% endblock %}
 {% block body %}
 {% block title %}
-<h2>Home</h2>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<h2>
+					Aplicativo de tarefas
+				</h2>
+				<p>
+					Esta aplicação permite que sejam criadas tarefas, bem como realizar sua edição e remoção.
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" href="{% url 'tasks:list-tasks' %}">Ir para Tarefas</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
-</br>
-</br>
-<a href="{% url 'tasks:list-tasks' %}">Tasks list</a>
-</br>
 {% endblock %}

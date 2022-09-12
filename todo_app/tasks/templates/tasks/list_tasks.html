@@ -2,52 +2,113 @@
 {% block page_title %}Cadastro de tarefas - Todos{% endblock %}
 {% block body %}
 {% block title %}
-<h2>Lista de tarefas</h2>
 {% endblock %}
 
-{% if a.deleted %}
-<h5>Tarefa "{{a.deleted}}" foi removida.</h5>
+<div class="container-fluid">
+<h2>Lista de tarefas</h2>
+	<div class="row">
+		<div class="col-md-12">
+            {% if a.deleted %}
+            <div class="alert alert-info alert-dismissable">
+
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+
+                            </button>
+            <h5>Tarefa "{{a.deleted}}" foi removida.</h5>
+                </div>
+            <div>
+            {% endif %}
+
+            {% if not tasks %}
+            <div class="col-md-4 alert alert-success alert-dismissable">
+
+            <h4 style="text-align:center">Sem tarefas.
+                <a href="{% url 'tasks:add-task' %}" type="button" class="btn btn-secondary">
+				&#10133
+			</a></h4>
+
+                <a href="{% url 'tasks:add-task' %}" style="text-decoration:none"></a>
+
+            {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Contato</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Ativo</th>
+                        <th>Ações</th>
+                    </tr>
+				</thead>
+
+				<tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.id}}</td>
+                        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.contact}}</td>
+                        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.title}}</td>
+                        <td style="{% if task.active is False %}opacity:20%;{% endif %}">
+                            {% if task.description %}
+                            {{task.truncated_description}}
+                            {% else %}Sem descrição{% endif %}
+                        </td>
+                        <td>{% if task.active is True %}&#9989{% elif task.active is False %}&#11036{% endif %}</td>
+                        <td>
+                            <a href="{% url 'tasks:edit-task' task.id %}" style="text-decoration:none">&#128221</a>
+                            <a id="modal-829739" href="#modal-container-829739" data-toggle="modal">&#10060</a>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="modal-container-829739" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">
+                    Deletar
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja remover a tarefa?
+            </div>
+            <div class="modal-footer">
+
+                <a href="{% url 'tasks:delete-task' task.id %}" type="button" class="btn btn-danger">
+                    Deletar
+                </a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Fechar
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+                {% endfor %}
+                <tr style="text-align:center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="{% url 'tasks:add-task' %}" style="text-decoration:none">&#10133</a></td>
+                <td></td>
+                </tr>
+
+				</tbody>
+
+            </table>
 {% endif %}
-
-{% if not tasks %}
-<h4>Sem tarefas. <a href="{% url 'tasks:add-task' %}" style="text-decoration:none">&#10133</a> </h4>
-
-{% else %}
-<table>
-    <tr>
-        <th style="width:12%">Id</th>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Ativo</th>
-        <th style="width:12%"></th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr style="text-align:center">
-        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.id}}</td>
-        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.title}}</td>
-        <td style="{% if task.active is False %}opacity:20%;{% endif %}">
-            {% if task.description %}
-            {{task.truncated_description}}
-            {% else %}Sem descrição{% endif %}
-        </td>
-        <td>{% if task.active is True %}&#9989{% elif task.active is False %}&#11036{% endif %}</td>
-        <td><a href="{% url 'tasks:edit-task' task.id %}" style="text-decoration:none">&#128221</a></td>
-        <td><a href="{% url 'tasks:delete-task' task.id %}" style="text-decoration:none">&#10060</a></td>
-    </tr>
-    {% endfor %}
-    <tr style="text-align:center">
-    <td></td>
-    <td></td>
-    <td><a href="{% url 'tasks:add-task' %}" style="text-decoration:none">&#10133</a></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-
-</table>
-{% endif %}
-
+		</div>
+	</div>
+</div>
 </br>
+
+
+
+
 {% endblock body %}
 {% block back_button %}<a href="/">&#9194</a>{% endblock %}
+
+
