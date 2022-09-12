@@ -12,13 +12,13 @@ class Task(models.Model):
     registered_at = models.DateTimeField(verbose_name='Registrado em', auto_now_add=True)
 
     class Meta:
-        ordering = ['-active', '-modified_at', '-registered_at',]
+        ordering = ['-active', '-modified_at', '-registered_at', ]
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('tasks:edit-task', kwargs={'id': self.id,})
+        return reverse('tasks:edit-task', kwargs={'id': self.id, })
 
     def truncated_description(self):
         if len(self.description) > 33:

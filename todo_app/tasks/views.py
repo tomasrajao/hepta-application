@@ -1,12 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 
 from todo_app.tasks.forms import TaskForm
 from todo_app.tasks.models import Task
 
 
 def list_tasks(request):
+    try:
+        a = request.session['title']
+        request.session['title'] = ''
+    except KeyError:
+        a = ''
     tasks = Task.objects.all()
-    return render(request, 'tasks/list_tasks.html', context={'tasks': tasks})
+    return render(request, 'tasks/list_tasks.html', context={'tasks': tasks, 'a': a})
 
 
 def add_task(request):
@@ -32,3 +37,10 @@ def edit_task(request, id):
         form = TaskForm(initial={'title': task.title, 'description': task.description})
 
     return render(request, 'tasks/edit_task.html', {'form': form})
+
+
+def delete_task(request, id):
+    task = get_object_or_404(Task, id=id)
+    task.delete()
+    request.session['title'] = {'deleted': task.title}
+    return redirect(reverse('tasks:list-tasks'))
