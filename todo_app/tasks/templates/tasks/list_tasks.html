@@ -5,6 +5,14 @@
 <h2>Lista de tarefas</h2>
 {% endblock %}
 
+{% if a.deleted %}
+<h5>Tarefa "{{a.deleted}}" foi removida.</h5>
+{% endif %}
+
+{% if not tasks %}
+<h4>Sem tarefas. <a href="{% url 'tasks:add-task' %}" style="text-decoration:none">&#10133</a> </h4>
+
+{% else %}
 <table>
     <tr>
         <th style="width:12%">Id</th>
@@ -16,16 +24,30 @@
     </tr>
     {% for task in tasks %}
     <tr style="text-align:center">
-        <td>{{task.id}}</td>
-        <td>{{task.title}}</td>
-        <td>{% if task.description %}{{task.truncated_description}}{% else %}Sem descrição{% endif %}</td>
+        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.id}}</td>
+        <td style="{% if task.active is False %}opacity:20%;{% endif %}">{{task.title}}</td>
+        <td style="{% if task.active is False %}opacity:20%;{% endif %}">
+            {% if task.description %}
+            {{task.truncated_description}}
+            {% else %}Sem descrição{% endif %}
+        </td>
         <td>{% if task.active is True %}&#9989{% elif task.active is False %}&#11036{% endif %}</td>
-        <td><a href="{{task.get_absolute_url}}" style="text-decoration:none">&#128221</a></td>
-        <td><a href="" style="text-decoration:none">&#10060</a></td>
+        <td><a href="{% url 'tasks:edit-task' task.id %}" style="text-decoration:none">&#128221</a></td>
+        <td><a href="{% url 'tasks:delete-task' task.id %}" style="text-decoration:none">&#10060</a></td>
     </tr>
     {% endfor %}
+    <tr style="text-align:center">
+    <td></td>
+    <td></td>
+    <td><a href="{% url 'tasks:add-task' %}" style="text-decoration:none">&#10133</a></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
 
 </table>
+{% endif %}
+
 </br>
-<a href="{% url 'tasks:add-task' %}">Add task</a>
 {% endblock body %}
+{% block back_button %}<a href="/">&#9194</a>{% endblock %}

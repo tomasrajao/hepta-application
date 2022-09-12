@@ -9,13 +9,10 @@
 
 {% block body %}
     {% block title %}{% endblock %}
-
 {% endblock %}
-{% if request.path != '/' %}
 </br>
 </br>
 </br>
-<a href="javascript:history.back()">&#9194</a>
-{% endif %}
+{% block back_button %}{% endblock %}
 </body>
 </html>
