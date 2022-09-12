@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block page_title %}Cadastro de tarefas - Editar{% endblock %}
+{% block body %}
+    {% block title %}
+        <h2>Editar tarefa</h2>
+    {% endblock %}
+<form action="." method="post">
+    {% csrf_token %}
+    {% for field in form %}
+
+    <div class="fieldWrapper">
+    {{field.label_tag}}
+    {% if 'Ativo' not in field.label_tag %}
+        </br>
+        </br>
+    {% endif %}
+    {{field}}
+        </br>
+        </br>
+    </div>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock body %}
