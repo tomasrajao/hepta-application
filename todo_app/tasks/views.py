@@ -19,7 +19,7 @@ def add_task(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/tasks/list')
+            return redirect(reverse('tasks:list-tasks'))
     else:
         form = TaskForm()
 
@@ -32,9 +32,9 @@ def edit_task(request, id):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('/tasks/list')
+            return redirect('tasks:list-tasks')
     else:
-        form = TaskForm(initial={'title': task.title, 'description': task.description})
+        form = TaskForm(initial={'title': task.title, 'description': task.description, 'contact': task.contact, 'active': task.active})
 
     return render(request, 'tasks/edit_task.html', {'form': form})
 

@@ -10,9 +10,11 @@ class Task(models.Model):
     active = models.BooleanField(verbose_name='Ativo', default=True)
     modified_at = models.DateTimeField(verbose_name='Modificado em', auto_now=True)
     registered_at = models.DateTimeField(verbose_name='Registrado em', auto_now_add=True)
+    contact = models.ForeignKey('Contact', on_delete=models.CASCADE, related_name='Contato')
 
     class Meta:
         ordering = ['-active', '-modified_at', '-registered_at', ]
+        verbose_name = 'Tarefa'
 
     def __str__(self):
         return self.title
@@ -23,3 +25,16 @@ class Task(models.Model):
         return self.description
 
     truncated_description.short_description = 'Descrição'
+
+
+class Contact(models.Model):
+    name = models.CharField(verbose_name='Nome', max_length=200)
+    email = models.EmailField(verbose_name='Email', max_length=254)
+    modified_at = models.DateTimeField(verbose_name='Modificado em', auto_now=True)
+    registered_at = models.DateTimeField(verbose_name='Registrado em', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Contato'
+
+    def __str__(self):
+        return self.name

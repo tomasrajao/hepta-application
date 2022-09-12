@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block page_title %}Cadastro de tarefas - Adicionar{% endblock %}
+{% block body %}
+    {% block title %}<h2>Cadastrar tarefa</h2>{% endblock %}
+    <form action="." method="post">
+        {% csrf_token %}
+        {% for field in form %}
+
+            <div class="fieldWrapper">
+            {{field.label_tag}}
+            {% if 'Ativo' not in field.label_tag %}
+                </br>
+                </br>
+            {% endif %}
+            {{field}}
+            </br>
+            </br>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock body %}
+{% block back_button %}<a href="{% url 'tasks:list-tasks' %}">&#9194</a>{% endblock %}
