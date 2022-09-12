@@ -1,24 +1,31 @@
 {% extends 'core/base.html' %}
+{% block page_title %}Cadastro de tarefas - Todos{% endblock %}
 {% block body %}
 {% block title %}
 <h2>Lista de tarefas</h2>
 {% endblock %}
+
 <table>
     <tr>
         <th style="width:12%">Id</th>
         <th>Título</th>
         <th>Descrição</th>
         <th>Ativo</th>
+        <th style="width:12%"></th>
+        <th></th>
     </tr>
     {% for task in tasks %}
     <tr style="text-align:center">
         <td>{{task.id}}</td>
         <td>{{task.title}}</td>
-        <td>{{task.truncated_description}}</td>
+        <td>{% if task.description %}{{task.truncated_description}}{% else %}Sem descrição{% endif %}</td>
         <td>{% if task.active is True %}&#9989{% elif task.active is False %}&#11036{% endif %}</td>
-        </br>
-        </br>
+        <td><a href="{{task.get_absolute_url}}" style="text-decoration:none">&#128221</a></td>
+        <td><a href="" style="text-decoration:none">&#10060</a></td>
     </tr>
     {% endfor %}
+
 </table>
+</br>
+<a href="{% url 'tasks:add-task' %}">Add task</a>
 {% endblock body %}
